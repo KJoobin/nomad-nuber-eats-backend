@@ -9,6 +9,7 @@ import { RestaurantsModule } from './restaurants/restaurants.module';
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      transformAutoSchemaFile: true,
     }),
     RestaurantsModule,
   ],
