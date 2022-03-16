@@ -10,6 +10,17 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      synchronize: process.env.NODE_ENV !== 'prod',
+      logging: true,
+      entities: [Restaurant],
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: process.env.NODE_ENV === 'dev' ? '.dev.env' : '.test.env',
@@ -22,19 +33,6 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
         DB_PASSWORD: Joi.string().required(),
         DB_NAME: Joi.string().required(),
       }),
-    }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      synchronize: process.env.NODE_ENV !== 'prod',
-      logging: true,
-      entities: [Restaurant],
-      // migrations: ['src/migration/**/*.ts'],
-      // subscribers: ['src/subscriber/**/*.ts'],
     }),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
