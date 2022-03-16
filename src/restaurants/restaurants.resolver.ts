@@ -13,7 +13,7 @@ export class RestaurantsResolver {
   }
   @Mutation(() => Restaurant)
   createRestaurant(
-    @Args() createRestaurantInput: CreateRestaurantDto,
+    @Args('input') createRestaurantInput: CreateRestaurantDto,
   ): Promise<Restaurant> {
     return this.restaurantsService.createRestaurant(createRestaurantInput);
   }
